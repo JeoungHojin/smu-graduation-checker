@@ -1,0 +1,193 @@
+/* 전체 레이아웃 */
+body {
+  margin: 0;
+  background-color: #f0f2f5;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* 헤더 (상명대 블루) */
+.app-header {
+  width: 100%;
+  background-color: #1f3a75; /* 상명대 색상 */
+  color: white;
+  padding: 40px 0;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.app-header p {
+  opacity: 0.8;
+  margin-top: 10px;
+}
+
+/* 메인 컨텐츠 */
+.main-content {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  margin-top: -30px; /* 헤더 위로 살짝 겹치게 */
+}
+
+/* 카드 공통 스타일 */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #333;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* 1. 입력 폼 스타일 */
+.input-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.input-item {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-item label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input-item input, .input-item select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+/* 2. 업로드 버튼 스타일 */
+.upload-card {
+  text-align: center;
+}
+
+.upload-desc {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 12px 30px;
+  cursor: pointer;
+  background-color: #1f3a75;
+  color: white;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.custom-file-upload:hover {
+  background-color: #162a55;
+}
+
+/* 3. 결과창 스타일 */
+.result-container {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.result-title {
+  text-align: center;
+  color: #333;
+  margin: 30px 0 20px;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .result-grid {
+    grid-template-columns: 1fr; /* 모바일은 한 줄로 */
+  }
+}
+
+.result-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.result-item .label {
+  font-weight: bold;
+  color: #444;
+}
+
+.result-item .status {
+  text-align: right;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.badge.pass {
+  background-color: #e6f4ea;
+  color: #1e8e3e;
+}
+
+.badge.fail {
+  background-color: #fce8e6;
+  color: #d93025;
+}
+
+.detail {
+  font-size: 14px;
+  color: #666;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

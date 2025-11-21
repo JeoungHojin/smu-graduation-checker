@@ -1,5 +1,7 @@
 const xlsx = require('xlsx');
 
+
+
 // 사용자의 실제 수강 내역 (이미지 기반 변환)
 const myData = [
   // [교양]

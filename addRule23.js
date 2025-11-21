@@ -1,45 +1,53 @@
-require('dotenv').config(); // ★ .env 사용
+require('dotenv').config();
 const mongoose = require('mongoose');
 const Rule = require('./models/Rule');
 
-// .env에서 주소 가져오기
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('🔐 몽고디비 연결 성공 (규칙 저장용)'))
-  .catch(err => console.log(err));
+  .then(() => console.log('🔐 몽고디비 연결 성공'));
 
 async function createRule23() {
-  // 혹시 남아있을지 모를 찌꺼기 데이터 삭제
   await Rule.deleteMany({ entry_year: 2023, dept_name: "소프트웨어학과" });
 
-  // 23학번 채점 기준표 생성
   const rule23 = new Rule({
     entry_year: 2023,
     dept_name: "소프트웨어학과",
     
     major_tracks: {
-      // 심화전공: 전심 15 + 전선 60
-      intensive: {
-        deep_credit: 15, 
-        elective_credit: 60
-      },
-      // 다전공: 합쳐서 45
-      multi: {
-        total_credit: 45
-      },
-      // 부전공: 합쳐서 21
-      minor: {
-        total_credit: 21
-      }
+      intensive: { deep_credit: 15, elective_credit: 60 },
+      multi: { total_credit: 45 },
+      minor: { total_credit: 21 }
     },
     
-    // 교양 (일단 임시값)
     general: {
-      total_credit: 33
+      total_credit: 33, // ★ 교양 총 33학점 이상 필수
+
+      basic: {
+        // 1. 고정 필수 (3과목)
+        fixed_list: [
+          "HBLA5001", // 사고와표현
+          "HBLA5201", // 컴퓨팅사고와데이터의이해
+          "HBLA5202"  // 알고리즘과게임콘텐츠
+        ],
+        // 2. 택 1 필수 (영어 or 기초수학)
+        choice_list: [
+          "HBLA5210", // EnglishForAcademicPurposes
+          "HBLA5004"  // 기초수학 (코드 확인 필요하나 일단 예시로 넣음)
+        ]
+      },
+
+      core_competency: {
+        area_count: 2 // 핵심역량 2개 영역
+      },
+
+      balanced: {
+        area_count: 3, // 균형교양 3개 영역
+        excluded_areas: ["공학"] // 공학 제외
+      }
     }
   });
 
   await rule23.save();
-  console.log("✅ 2023학번 졸업요건(Rule)이 DB에 저장되었습니다!");
+  console.log("✅ 2023학번 졸업요건(기초교양 택1 로직 포함) 저장 완료!");
   process.exit();
 }
 

@@ -1,31 +1,34 @@
 const mongoose = require('mongoose');
 
 const ruleSchema = new mongoose.Schema({
-  entry_year: { type: Number, required: true }, // 학번
-  dept_name: { type: String, required: true },  // 학과
+  entry_year: { type: Number, required: true },
+  dept_name: { type: String, required: true },
   
-  // 전공 트랙별 학점 요건 (신버전)
+  // 전공 (기존과 동일)
   major_tracks: {
-    // 1. 심화전공 (전심/전선 구분)
-    intensive: {
-      deep_credit: { type: Number, default: 15 },     // 전공심화 최소 학점
-      elective_credit: { type: Number, default: 60 }, // 전공선택 최소 학점
-    },
-    
-    // 2. 다전공 (총점 기준)
-    multi: {
-      total_credit: { type: Number, default: 45 } 
-    },
-    
-    // 3. 부전공 (총점 기준)
-    minor: {
-      total_credit: { type: Number, default: 21 } 
-    }
+    intensive: { deep_credit: { type: Number, default: 15 }, elective_credit: { type: Number, default: 60 } },
+    multi: { total_credit: { type: Number, default: 45 } },
+    minor: { total_credit: { type: Number, default: 21 } }
   },
 
-  // 교양 요건
+  // 교양 (23학번 기준 업데이트)
   general: {
-    total_credit: { type: Number, default: 33 }
+    total_credit: { type: Number, default: 33 }, // ★ 교양 총 학점 33점 이상
+
+    // 1. 기초교양 (4과목)
+    basic: {
+      fixed_list: [String],  // 무조건 들어야 하는 3개 (사고, 컴퓨팅, 알고리즘)
+      choice_list: [String]  // 둘 중 하나만 들으면 되는 그룹 (영어 or 수학)
+    },
+    // 2. 핵심역량 (2개 영역)
+    core_competency: {
+      area_count: { type: Number, default: 2 }
+    },
+    // 3. 균형교양 (3개 영역, 공학 제외)
+    balanced: {
+      area_count: { type: Number, default: 3 },
+      excluded_areas: [String]
+    }
   }
 });
 
